@@ -1,4 +1,4 @@
-FROM php:8.2-fpm
+FROM php:8.2-fpm  
 # Menggunakan PHP 8.2
 
 # Install dependencies
@@ -16,25 +16,18 @@ RUN apt-get update && apt-get install -y \
     && docker-php-ext-install pdo pdo_mysql mbstring exif pcntl bcmath gd
 
 # Set working directory
-WORKDIR /var/www/html/src  
+WORKDIR /var/www/appdock  
 # <-- Ubah direktori kerja ke src
 
 # Install composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
 # Copy existing application directory contents
-COPY . /var/www/html/src   
+COPY . /var/www/appdock  
 # <-- Ubah sesuai folder src
 
 # Copy existing application directory permissions
-RUN chown -R www-data:www-data /var/www/html/src
-
-# Beri izin pada folder storage dan bootstrap/cache
-#RUN chmod -R 775 /var/www/appdock/storage \
-#    && chmod -R 775 /var/www/appdock/bootstrap/cache \
-#    && chown -R www-data:www-data /var/www/appdock/storage \
-#    && chown -R www-data:www-data /var/www/appdock/bootstrap/cache
-#USER www-data
+RUN chown -R www-data:www-data /var/www/appdock
 
 # Expose port 9000 and start php-fpm server
 EXPOSE 9000
