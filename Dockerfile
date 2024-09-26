@@ -1,4 +1,4 @@
-FROM php:8.2-fpm  
+FROM php:8.2-fpm
 # Menggunakan PHP 8.2
 
 # Install dependencies
@@ -28,6 +28,13 @@ COPY . /var/www/html/src
 
 # Copy existing application directory permissions
 RUN chown -R www-data:www-data /var/www/html/src
+
+# Beri izin pada folder storage dan bootstrap/cache
+#RUN chmod -R 775 /var/www/appdock/storage \
+#    && chmod -R 775 /var/www/appdock/bootstrap/cache \
+#    && chown -R www-data:www-data /var/www/appdock/storage \
+#    && chown -R www-data:www-data /var/www/appdock/bootstrap/cache
+#USER www-data
 
 # Expose port 9000 and start php-fpm server
 EXPOSE 9000
